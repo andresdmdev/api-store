@@ -25,10 +25,6 @@ productServices.formatedProductsArray = (data) => {
 }
 
 productServices.formatedProductObject = (data) => {
-  if (!(Object.keys(data).length > 5)) {
-    return data
-  }
-
   return {
     id: data.id,
     name: data.name,
@@ -50,7 +46,9 @@ productServices.formatedProductObject = (data) => {
 productServices.validateProductData = (data) => {
   if (Array.isArray(data)) throw Error('It is not an object')
 
-  if (Object.keys(data).length < 4) throw Error('Object empty or with less than 5 properties')
+  if (!(Object.keys(data).includes('id'))) throw Error('It does not include and id property')
+
+  if (Object.keys(data).length < 5) throw Error('Object empty or with less than 5 properties')
 
   return {
     id: data.id,
@@ -68,6 +66,12 @@ productServices.validateProductData = (data) => {
     image3: data.image3 === undefined ? '' : data.image3,
     averageRating: data.averageRating === undefined ? 0 : data.averageRating
   }
+}
+
+productServices.validateIdProduct = (id) => {
+  if (!id || id === '') throw Error('No se ingreso ningun id, por favor suministrarlo')
+
+  return id
 }
 
 module.exports = productServices
