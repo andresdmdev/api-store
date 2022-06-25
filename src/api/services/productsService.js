@@ -1,6 +1,11 @@
-// Products Service
+// Products Controllers
+// It creates an object to store all controllers
 const productServices = {}
 
+/*
+  This function formated the properties name of the products array
+  for better comprenssion in client side
+*/
 productServices.formatedProductsArray = (data) => {
   const formatedProduct = data.map(elem => {
     return {
@@ -24,6 +29,10 @@ productServices.formatedProductsArray = (data) => {
   return formatedProduct
 }
 
+/*
+  This function formated the properties name of the product object
+  for better comprenssion in client side
+*/
 productServices.formatedProductObject = (data) => {
   return {
     id: data.id,
@@ -43,6 +52,10 @@ productServices.formatedProductObject = (data) => {
   }
 }
 
+/*
+  This function validate it is an array, it includes property id and it has
+  5 properties then It formated the properties name of the product for use it in database
+*/
 productServices.validateProductData = (data) => {
   if (Array.isArray(data)) throw Error('It is not an object')
 
@@ -68,6 +81,10 @@ productServices.validateProductData = (data) => {
   }
 }
 
+/*
+  This function formated the properties name of the product for
+  better comprenssion in client side
+*/
 productServices.validateIdProduct = (id) => {
   if (!id || id === '') throw Error('No se ingreso ningun id, por favor suministrarlo')
 

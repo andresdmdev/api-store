@@ -1,7 +1,15 @@
 const pool = require('../../config/database')
 
+// Products Controllers
+// It creates an object to store all controllers
 const models = {}
 
+/*
+  The property allProducts is an async/await function.
+  It uses the pool and create an instance of promise
+  Then It does the sql statement and It returns an
+  array with all products of the database
+*/
 models.allProducts = async () => {
   const promisePool = pool.promise()
 
@@ -9,6 +17,12 @@ models.allProducts = async () => {
   return { products }
 }
 
+/*
+  The property findProductById is an async/await function.
+  It uses the pool and create an instance of promise
+  Then It does the sql statement by id and It returns an
+  array with the product of the database
+*/
 models.findProductById = async (id) => {
   const promisePool = pool.promise()
 
@@ -16,6 +30,12 @@ models.findProductById = async (id) => {
   return product
 }
 
+/*
+  The property searchProductByName is an async/await function.
+  It uses the pool and create an instance of promise
+  Then It does the sql statement by name and It returns an
+  array with the product of the database
+*/
 models.searchProductByName = async (name) => {
   const promisePool = pool.promise()
 
@@ -23,6 +43,12 @@ models.searchProductByName = async (name) => {
   return products
 }
 
+/*
+  The property productsByLocation is an async/await function.
+  It uses the pool and create an instance of promise
+  Then It does the sql statement by idLocation and It returns an
+  array with all products of the database
+*/
 models.productsByLocation = async (idLocation) => {
   const promisePool = pool.promise()
 
@@ -30,6 +56,12 @@ models.productsByLocation = async (idLocation) => {
   return products
 }
 
+/*
+  The property productsByCategory is an async/await function.
+  It uses the pool and create an instance of promise
+  Then It does the sql statement by idCategory and It returns an
+  array with all products of the database
+*/
 models.productsByCategory = async (idCategory) => {
   const promisePool = pool.promise()
 
@@ -37,6 +69,13 @@ models.productsByCategory = async (idCategory) => {
   return products
 }
 
+/*
+  The property addProduct is an async/await function.
+  It calls allProducts function to validate if an product
+  exist on the database.It uses the pool and create an instance
+  of promise Then It does the sql statement, It adds the product
+  to the database and return it
+*/
 models.addProduct = async (product) => {
   const { products } = await models.allProducts()
   const findProduct = products.find(elem => elem.id === product.id)
@@ -58,6 +97,13 @@ models.addProduct = async (product) => {
   }
 }
 
+/*
+  The property updateProduct is an async/await function.
+  It calls allProducts function to validate if an product
+  exist on the database.It uses the pool and create an instance
+  of promise Then It does the sql statement, It updates the product
+  to the database and return it
+*/
 models.updateProduct = async (product) => {
   const { products } = await models.allProducts()
   const findProduct = products.find(elem => elem.id === product.id)
@@ -79,6 +125,13 @@ models.updateProduct = async (product) => {
   }
 }
 
+/*
+  The property deleteProduct is an async/await function.
+  It calls allProducts function to validate if an product
+  exist on the database.It uses the pool and create an instance
+  of promise Then It does the sql statement, It deletes the product
+  to the database and return it
+*/
 models.deleteProduct = async (idProduct) => {
   const { products } = await models.allProducts()
   const findProduct = products.find(elem => elem.id === idProduct)
