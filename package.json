@@ -37,7 +37,8 @@
   ],
   "jest": {
     "testPathIgnorePatterns" : [
-      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/product.test.js" 
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/products.test.js",
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/users.test.js"
     ]
   }
 }
