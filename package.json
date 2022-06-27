@@ -32,6 +32,12 @@
     "extends": "./node_modules/standard/eslintrc.json"
   },
   "eslintIgnore": [
-    "products.test.js"
-  ]
+    "products.test.js",
+    "users.test.js"
+  ],
+  "jest": {
+    "testPathIgnorePatterns" : [
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/product.test.js" 
+    ]
+  }
 }

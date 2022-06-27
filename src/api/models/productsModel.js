@@ -11,10 +11,14 @@ const models = {}
   array with all products of the database
 */
 models.allProducts = async () => {
-  const promisePool = pool.promise()
+  try {
+    const promisePool = pool.promise()
 
-  const [products] = await promisePool.query('SELECT * FROM productsAdidas')
-  return { products }
+    const [products] = await promisePool.query('SELECT * FROM productsAdidas')
+    return { products }
+  } catch (error) {
+    throw Error(error)
+  }
 }
 
 /*
@@ -24,10 +28,14 @@ models.allProducts = async () => {
   array with the product of the database
 */
 models.findProductById = async (id) => {
-  const promisePool = pool.promise()
+  try {
+    const promisePool = pool.promise()
 
-  const [product] = await promisePool.query(`SELECT * FROM productsAdidas WHERE id='${id}'`)
-  return product
+    const [product] = await promisePool.query(`SELECT * FROM productsAdidas WHERE id LIKE '%${id}%'`)
+    return product
+  } catch (error) {
+    throw Error(error)
+  }
 }
 
 /*
@@ -37,10 +45,14 @@ models.findProductById = async (id) => {
   array with the product of the database
 */
 models.searchProductByName = async (name) => {
-  const promisePool = pool.promise()
+  try {
+    const promisePool = pool.promise()
 
-  const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE name LIKE '%${name}%'`)
-  return products
+    const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE name LIKE '%${name}%'`)
+    return products
+  } catch (error) {
+    throw Error(error)
+  }
 }
 
 /*
@@ -50,10 +62,14 @@ models.searchProductByName = async (name) => {
   array with all products of the database
 */
 models.productsByLocation = async (idLocation) => {
-  const promisePool = pool.promise()
+  try {
+    const promisePool = pool.promise()
 
-  const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE idLocation='${idLocation}'`)
-  return products
+    const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE idLocation='${idLocation}'`)
+    return products
+  } catch (error) {
+    throw Error(error)
+  }
 }
 
 /*
@@ -63,10 +79,14 @@ models.productsByLocation = async (idLocation) => {
   array with all products of the database
 */
 models.productsByCategory = async (idCategory) => {
-  const promisePool = pool.promise()
+  try {
+    const promisePool = pool.promise()
 
-  const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE idCategory='${idCategory}'`)
-  return products
+    const [products] = await promisePool.query(`SELECT * FROM productsAdidas WHERE idCategory='${idCategory}'`)
+    return products
+  } catch (error) {
+    throw Error(error)
+  }
 }
 
 /*
@@ -77,23 +97,29 @@ models.productsByCategory = async (idCategory) => {
   to the database and return it
 */
 models.addProduct = async (product) => {
-  const { products } = await models.allProducts()
-  const findProduct = products.find(elem => elem.id === product.id)
+  try {
+    const { products } = await models.allProducts()
+    const findProduct = products.find(elem => elem.id === product.id)
 
-  if (findProduct !== undefined) {
-    throw Error('Ya se ha ingresado un producto con ese id, por favor introduce otro')
-  } else {
-    const promisePool = pool.promise()
+    if (findProduct) {
+      throw Error('Ya se ha ingresado un producto con ese id, por favor introduce otro')
+    } else {
+      const promisePool = pool.promise()
 
-    await promisePool
-      .query(`INSERT INTO productsAdidas 
-      (id, name, sellingPrice, discount, color, idCategory, idLocation, 
-        breadcrumbs, description, brand, image1, image2, image3, averageRating) 
-      VALUES ('${product.id}','${product.name}','${product.sellingPrice}','${product.discount}','${product.color}','${product.idCategory}',
-      '${product.idLocation}','${product.breadcrumbs}','${product.description}','${product.brand}','${product.image1}',
-      '${product.image2}','${product.image3}','${product.averageRating}')`)
+      await promisePool
+        .query(`INSERT INTO productsAdidas 
+        (id, name, price, discount, currency, availability, color, idCategory, idLocation, 
+          breadcrumbs, description, brand, image1, image2, image3, averageRating) 
+        VALUES ('${product.id}','${product.name}','${product.price}','${product.discount}',
+        '${product.currency}','${product.availability}','${product.color}','${product.idCategory}',
+        '${product.idLocation}','${product.breadcrumbs}','${product.description}',
+        '${product.brand}','${product.image1}','${product.image2}','${product.image3}',
+        '${product.averageRating}')`)
 
-    return product
+      return product
+    }
+  } catch (error) {
+    throw Error(error)
   }
 }
 
@@ -105,23 +131,21 @@ models.addProduct = async (product) => {
   to the database and return it
 */
 models.updateProduct = async (product) => {
-  const { products } = await models.allProducts()
-  const findProduct = products.find(elem => elem.id === product.id)
-
-  if (!findProduct) {
-    throw Error('No-valid-id - No se ha registrado un producto con ese id, por favor introduce otro')
-  } else {
+  try {
     const promisePool = pool.promise()
 
     await promisePool
-      .query(`UPDATE productsAdidas SET name='${product.name}', sellingPrice='${product.sellingPrice}', 
-        discount='${product.discount}', color='${product.color}', idCategory='${product.idCategory}', 
-        idLocation='${product.idLocation}', breadcrumbs='${product.breadcrumbs}', description='${product.description}',
-        brand='${product.brand}', image1='${product.image1}', image2='${product.image2}',
-        image3='${product.image3}', averageRating='${product.averageRating}' WHERE id='${product.id}'
+      .query(`UPDATE productsAdidas SET name='${product.name}', price='${product.price}', 
+        discount='${product.discount}', currency='${product.currency}', availability='${product.availability}', 
+        color='${product.color}', idCategory='${product.idCategory}', idLocation='${product.idLocation}', 
+        breadcrumbs='${product.breadcrumbs}', description='${product.description}', brand='${product.brand}', 
+        image1='${product.image1}', image2='${product.image2}', image3='${product.image3}', 
+        averageRating='${product.averageRating}' WHERE id='${product.id}'
       `)
 
     return product
+  } catch (error) {
+    throw Error(error)
   }
 }
 
@@ -133,17 +157,21 @@ models.updateProduct = async (product) => {
   to the database and return it
 */
 models.deleteProduct = async (idProduct) => {
-  const { products } = await models.allProducts()
-  const findProduct = products.find(elem => elem.id === idProduct)
+  try {
+    const { products } = await models.allProducts()
+    const findProduct = products.find(elem => elem.id === idProduct)
 
-  if (!findProduct) {
-    throw Error('No existe un producto asociado con el id, verificar id')
-  } else {
-    const promisePool = pool.promise()
+    if (!findProduct) {
+      throw Error('No existe un producto asociado con el id, verificar id')
+    } else {
+      const promisePool = pool.promise()
 
-    await promisePool.query(`DELETE FROM productsAdidas WHERE id='${idProduct}'`)
+      await promisePool.query(`DELETE FROM productsAdidas WHERE id='${idProduct}'`)
 
-    return { message: 'Producto eliminado exitosamente' }
+      return { message: 'Producto eliminado exitosamente' }
+    }
+  } catch (error) {
+    throw Error(error)
   }
 }
 

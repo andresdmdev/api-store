@@ -10,10 +10,8 @@ const {
 } = require('../models/productsModel')
 
 const {
-  formatedProductsArray,
-  formatedProductObject,
   validateProductData,
-  validateIdProduct
+  validateProductDataToUpdate
 } = require('../services/productsService')
 
 // Products Controllers
@@ -28,7 +26,7 @@ const controller = {}
 controller.allProducts = async (req, res) => {
   try {
     const { products } = await allProducts()
-    res.status(200).json(formatedProductsArray(products)).end()
+    res.status(200).json(products).end()
   } catch (error) {
     res.status(404).send(error)
   }
@@ -41,9 +39,13 @@ controller.allProducts = async (req, res) => {
 */
 controller.findProductById = async (req, res) => {
   try {
-    const id = validateIdProduct(req.params.id)
-    const data = await findProductById(id)
-    res.status(200).json(formatedProductsArray(data)).end()
+    const data = await findProductById(req.params.id)
+
+    if (!data || data.length === 0) {
+      throw Error('Id no existe en la base de datos')
+    } else {
+      res.status(200).json(data).end()
+    }
   } catch (error) {
     res.status(404).send(error.message)
   }
@@ -57,7 +59,12 @@ controller.findProductById = async (req, res) => {
 controller.searchProductByName = async (req, res) => {
   try {
     const name = await searchProductByName(req.params.name)
-    res.status(200).json(formatedProductsArray(name)).end()
+
+    if (!name || name.length === 0) {
+      throw Error('Nombre no existe en la base de datos')
+    } else {
+      res.status(200).json(name).end()
+    }
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -71,7 +78,10 @@ controller.searchProductByName = async (req, res) => {
 controller.productsByLocation = async (req, res) => {
   try {
     const data = await productsByLocation(req.params.idLocation)
-    res.status(200).json(formatedProductsArray(data)).end()
+
+    if (!data) throw Error('Id de la locacion no existe en la base de datos')
+
+    res.status(200).json(data).end()
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -85,7 +95,10 @@ controller.productsByLocation = async (req, res) => {
 controller.productsByCategory = async (req, res) => {
   try {
     const data = await productsByCategory(req.params.idCategory)
-    res.status(200).json(formatedProductsArray(data)).end()
+
+    if (!data) throw Error('Id de categoria no existe en la base de datos')
+
+    res.status(200).json(data).end()
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -100,7 +113,7 @@ controller.addProduct = async (req, res) => {
   try {
     const body = validateProductData(req.body)
     const data = await addProduct(body)
-    res.status(200).json(formatedProductObject(data)).end()
+    res.status(200).json(data).end()
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -113,9 +126,13 @@ controller.addProduct = async (req, res) => {
 */
 controller.updateProduct = async (req, res) => {
   try {
-    const body = validateProductData(req.body)
+    const [product] = await findProductById(req.body.id)
+
+    if (!product) throw Error('Id de producto no existe en la base de datos')
+
+    const body = validateProductDataToUpdate(product, req.body)
     const data = await updateProduct(body)
-    res.status(200).json(formatedProductObject(data)).end()
+    res.status(200).json(data).end()
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -128,8 +145,7 @@ controller.updateProduct = async (req, res) => {
 */
 controller.deleteProduct = async (req, res) => {
   try {
-    const id = validateIdProduct(req.params.id)
-    const data = await deleteProduct(id)
+    const data = await deleteProduct(req.params.id)
     res.status(200).json(data).end()
   } catch (error) {
     res.status(404).json(error.message)
