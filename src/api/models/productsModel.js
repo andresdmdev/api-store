@@ -31,7 +31,7 @@ models.findProductById = async (id) => {
   try {
     const promisePool = pool.promise()
 
-    const [product] = await promisePool.query(`SELECT * FROM productsAdidas WHERE id LIKE '%${id}%'`)
+    const [product] = await promisePool.query(`SELECT * FROM productsAdidas WHERE id='${id}'`)
     return product
   } catch (error) {
     throw Error(error)
@@ -98,26 +98,19 @@ models.productsByCategory = async (idCategory) => {
 */
 models.addProduct = async (product) => {
   try {
-    const { products } = await models.allProducts()
-    const findProduct = products.find(elem => elem.id === product.id)
+    const promisePool = pool.promise()
 
-    if (findProduct) {
-      throw Error('Ya se ha ingresado un producto con ese id, por favor introduce otro')
-    } else {
-      const promisePool = pool.promise()
+    await promisePool
+      .query(`INSERT INTO productsAdidas 
+      (id, name, price, discount, currency, availability, color, idCategory, idLocation, 
+        breadcrumbs, description, brand, image1, image2, image3, averageRating) 
+      VALUES ('${product.id}','${product.name}','${product.price}','${product.discount}',
+      '${product.currency}','${product.availability}','${product.color}','${product.idCategory}',
+      '${product.idLocation}','${product.breadcrumbs}','${product.description}',
+      '${product.brand}','${product.image1}','${product.image2}','${product.image3}',
+      '${product.averageRating}')`)
 
-      await promisePool
-        .query(`INSERT INTO productsAdidas 
-        (id, name, price, discount, currency, availability, color, idCategory, idLocation, 
-          breadcrumbs, description, brand, image1, image2, image3, averageRating) 
-        VALUES ('${product.id}','${product.name}','${product.price}','${product.discount}',
-        '${product.currency}','${product.availability}','${product.color}','${product.idCategory}',
-        '${product.idLocation}','${product.breadcrumbs}','${product.description}',
-        '${product.brand}','${product.image1}','${product.image2}','${product.image3}',
-        '${product.averageRating}')`)
-
-      return product
-    }
+    return product
   } catch (error) {
     throw Error(error)
   }
@@ -158,18 +151,11 @@ models.updateProduct = async (product) => {
 */
 models.deleteProduct = async (idProduct) => {
   try {
-    const { products } = await models.allProducts()
-    const findProduct = products.find(elem => elem.id === idProduct)
+    const promisePool = pool.promise()
 
-    if (!findProduct) {
-      throw Error('No existe un producto asociado con el id, verificar id')
-    } else {
-      const promisePool = pool.promise()
+    await promisePool.query(`DELETE FROM productsAdidas WHERE id='${idProduct}'`)
 
-      await promisePool.query(`DELETE FROM productsAdidas WHERE id='${idProduct}'`)
-
-      return { message: 'Producto eliminado exitosamente' }
-    }
+    return { message: 'Producto eliminado exitosamente' }
   } catch (error) {
     throw Error(error)
   }

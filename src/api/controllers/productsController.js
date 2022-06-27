@@ -41,11 +41,9 @@ controller.findProductById = async (req, res) => {
   try {
     const data = await findProductById(req.params.id)
 
-    if (!data || data.length === 0) {
-      throw Error('Id no existe en la base de datos')
-    } else {
-      res.status(200).json(data).end()
-    }
+    if (!data || data.length === 0) throw Error('Id no existe en la base de datos')
+
+    res.status(200).json(data).end()
   } catch (error) {
     res.status(404).send(error.message)
   }
@@ -60,11 +58,9 @@ controller.searchProductByName = async (req, res) => {
   try {
     const name = await searchProductByName(req.params.name)
 
-    if (!name || name.length === 0) {
-      throw Error('Nombre no existe en la base de datos')
-    } else {
-      res.status(200).json(name).end()
-    }
+    if (!name || name.length === 0) throw Error('Nombre no existe en la base de datos')
+
+    res.status(200).json(name).end()
   } catch (error) {
     res.status(404).json(error.message)
   }
@@ -111,6 +107,10 @@ controller.productsByCategory = async (req, res) => {
 */
 controller.addProduct = async (req, res) => {
   try {
+    const [findProduct] = await findProductById(req.body.id)
+
+    if (findProduct) throw Error('Id no es valido o ya existe')
+
     const body = validateProductData(req.body)
     const data = await addProduct(body)
     res.status(200).json(data).end()
@@ -145,6 +145,10 @@ controller.updateProduct = async (req, res) => {
 */
 controller.deleteProduct = async (req, res) => {
   try {
+    const [findProduct] = await findProductById(req.params.id)
+
+    if (!findProduct) throw Error('Id no es valido o no existe')
+
     const data = await deleteProduct(req.params.id)
     res.status(200).json(data).end()
   } catch (error) {
