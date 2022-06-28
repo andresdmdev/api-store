@@ -1,8 +1,15 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
+const morgan = require('morgan')
+const cors = require('cors')
+
 const express = require('express')
 const app = express()
 
 // Middlewares Cors y Morgan
-app.use(require('./api/middlewares/middlewares').morgan2)
+app.use(morgan('dev'))
+app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
