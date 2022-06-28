@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "NODE_ENV=development nodemon ./src/index.js",
-    "test": "jest"
+    "test": "NODE_ENV=development jest"
   },
   "keywords": [
     "node",
@@ -32,6 +32,15 @@
     "extends": "./node_modules/standard/eslintrc.json"
   },
   "eslintIgnore": [
-    "products.test.js"
-  ]
+    "products.test.js",
+    "users.test.js",
+    "shopping.test.js"
+  ],
+  "jest": {
+    "testPathIgnorePatterns" : [
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/products.test.js",
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/users.test.js",
+      "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/shopping.test.js"
+    ]
+  }
 }

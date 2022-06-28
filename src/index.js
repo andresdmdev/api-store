@@ -1,14 +1,20 @@
 const express = require('express')
 const app = express()
 
-// Middlewares
+// Middlewares Cors y Morgan
 app.use(require('./api/middlewares/middlewares').morgan2)
 app.use(express.json())
 
 app.set('port', process.env.PORT || 3000)
 
-// Routes
-app.use('/api/products', require('./api/routes/productsRoutes')) // Products
+// Product Routes
+app.use('/api/products', require('./api/routes/productsRoutes'))
+
+// Users Routes
+app.use('/api/users', require('./api/routes/usersRoutes'))
+
+// Shopping Routes
+app.use('/api/shopping', require('./api/routes/shoppingRoutes'))
 
 app.listen(app.get('port'), () => {
   console.log('Server on port ' + app.get('port'))
