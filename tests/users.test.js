@@ -162,7 +162,7 @@ describe('Routes /api/users', () => {
 
     test('Should update an object with id, name and email properties', async () => {
       const response = await request(app)
-        .post('/api/users/')
+        .put('/api/users/')
         .send({
           "job": 'Freelancer',
           "age": 21,

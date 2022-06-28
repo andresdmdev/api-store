@@ -13,6 +13,9 @@ app.use('/api/products', require('./api/routes/productsRoutes'))
 // Users Routes
 app.use('/api/users', require('./api/routes/usersRoutes'))
 
+// Shopping Routes
+app.use('/api/shopping', require('./api/routes/shoppingRoutes'))
+
 app.listen(app.get('port'), () => {
   console.log('Server on port ' + app.get('port'))
 })

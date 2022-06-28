@@ -101,8 +101,8 @@ controllers.updateUser = async (req, res) => {
 
 /*
 * This controller verified if a user already exist with findUserById and then it calls
-* deleteUser from models that return a message that says 'Usuario eliminado' with the user
-* data updated and status 200 in other case status 404
+* deleteUser from models that return a message that says 'Usuario eliminado'
+* and status 200 in other case status 404
 */
 controllers.deleteUser = async (req, res) => {
   try {
