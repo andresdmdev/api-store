@@ -4,7 +4,7 @@
   "description": "Practice testing and backend",
   "main": "./src/index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "NODE_ENV=production node ./src/index.js",
     "dev": "NODE_ENV=development nodemon ./src/index.js",
     "test": "NODE_ENV=development jest"
   },
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "2.8.5",
+    "cross-env": "7.0.3",
     "dotenv": "16.0.1",
     "express": "4.18.1",
     "mysql2": "2.3.3"
@@ -37,7 +38,7 @@
     "shopping.test.js"
   ],
   "jest": {
-    "testPathIgnorePatterns" : [
+    "testPathIgnorePatterns": [
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/products.test.js",
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/users.test.js",
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/shopping.test.js"
