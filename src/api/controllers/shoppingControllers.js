@@ -124,7 +124,7 @@ controllers.updateShopping = async (req, res) => {
 */
 controllers.deleteShopping = async (req, res) => {
   try {
-    const [validateIdShopping] = await validateId(req.params.id)
+    const validateIdShopping = await validateId(req.params.id)
 
     const data = await deleteShopping(validateIdShopping.id)
     res.status(200).json(data).end()
