@@ -6,6 +6,26 @@ const cors = require('cors')
 
 const express = require('express')
 const app = express()
+const path = require('path')
+
+// Swagger docs
+const swaggerUI = require('swagger-ui-express')
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerSpec = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Node Rest Api - Adidas',
+      version: '1.0.0'
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000'
+      }
+    ]
+  },
+  apis: [`${path.join(__dirname, './api/routes/*.js')}`]
+}
 
 app.set('port', process.env.PORT || 3000)
 
@@ -14,6 +34,7 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(swaggerSpec)))
 
 // Product Routes
 app.use('/api/products', require('./api/routes/productsRoutes'))
