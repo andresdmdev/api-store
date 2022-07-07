@@ -20,7 +20,7 @@ const swaggerSpec = {
     },
     servers: [
       {
-        url: 'http://localhost:5000'
+        url: 'https://api-store-adidas.herokuapp.com'
       }
     ]
   },
