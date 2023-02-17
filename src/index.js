@@ -23,4 +23,8 @@ app.listen(app.get('port'), () => {
   console.log('Server on port ' + app.get('port'))
 })
 
+app.get('/', (req, res) => {
+  res.send('Api Adidas')
+})
+
 module.exports = app
