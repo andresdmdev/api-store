@@ -17,14 +17,14 @@
   "license": "ISC",
   "dependencies": {
     "cors": "2.8.5",
-    "dotenv": "16.0.1",
+    "dotenv": "^16.0.1",
     "express": "4.18.1",
-    "mysql2": "2.3.3"
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "jest": "28.1.1",
     "morgan": "1.10.0",
-    "nodemon": "2.0.16",
+    "nodemon": "^2.0.16",
     "standard": "17.0.0",
     "supertest": "6.2.3"
   },
@@ -37,7 +37,7 @@
     "shopping.test.js"
   ],
   "jest": {
-    "testPathIgnorePatterns" : [
+    "testPathIgnorePatterns": [
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/products.test.js",
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/users.test.js",
       "/home/andres/Desktop/Full_Stack_Developer/JavaScript/JavaScript/Node.js/Practice-5-Backend-Testing-Api/tests/shopping.test.js"
