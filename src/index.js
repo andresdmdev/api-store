@@ -19,12 +19,12 @@ app.use('/api/users', require('./api/routes/usersRoutes'))
 // Shopping Routes
 app.use('/api/shopping', require('./api/routes/shoppingRoutes'))
 
-app.listen(app.get('port'), () => {
-  console.log('Server on port ' + app.get('port'))
+app.use('/', (req, res) => {
+  res.json({ message: 'Api Adidas' })
 })
 
-app.get('/', (req, res) => {
-  res.send('Api Adidas')
+app.listen(app.get('port'), () => {
+  console.log('Server on port ' + app.get('port'))
 })
 
 module.exports = app
