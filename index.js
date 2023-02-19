@@ -1,11 +1,11 @@
 const express = require('express')
 
-require('dotenv').config()
-
 const app = express()
 
 // Middlewares Cors y Morgan
 app.use(require('./src/api/middlewares/middlewares').morgan2)
+app.use(require('./src/api/middlewares/middlewares').cors())
+
 app.use(express.json())
 
 app.set('port', process.env.PORT || 3000)
