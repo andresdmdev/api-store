@@ -37,6 +37,12 @@ productServices.validateProductData = (data) => {
     image1: !data.image1 ? '' : data.image1,
     image2: !data.image2 ? '' : data.image2,
     image3: !data.image3 ? '' : data.image3,
+    image4: !data.image4 ? '' : data.image4,
+    image5: !data.image5 ? '' : data.image5,
+    image6: !data.image6 ? '' : data.image6,
+    image7: !data.image7 ? '' : data.image7,
+    image8: !data.image8 ? '' : data.image8,
+    image9: !data.image9 ? '' : data.image9,
     averageRating: !data.averageRating ? 0 : data.averageRating
   }
 }
