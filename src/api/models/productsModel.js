@@ -103,12 +103,12 @@ models.addProduct = async (product) => {
     await promisePool
       .query(`INSERT INTO productsAdidas 
       (id, name, price, discount, currency, availability, color, idCategory, idLocation, 
-        breadcrumbs, description, brand, image1, image2, image3, averageRating) 
+        breadcrumbs, description, brand, image1, image2, image3, image4, image5, image6, image7, image8, image9, averageRating) 
       VALUES ('${product.id}','${product.name}','${product.price}','${product.discount}',
       '${product.currency}','${product.availability}','${product.color}','${product.idCategory}',
       '${product.idLocation}','${product.breadcrumbs}','${product.description}',
-      '${product.brand}','${product.image1}','${product.image2}','${product.image3}',
-      '${product.averageRating}')`)
+      '${product.brand}','${product.image1}','${product.image2}','${product.image3}', '${product.image4}','${product.image5}','${product.image6}', 
+      '${product.image7}','${product.image8}','${product.image9}', '${product.averageRating}')`)
 
     return product
   } catch (error) {
